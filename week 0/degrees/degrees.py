@@ -18,6 +18,7 @@ def load_data(directory):
     Load data from CSV files into memory.
     """
     # Load people
+    print("1, 2, 3")
     with open(f"{directory}/people.csv", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
