@@ -1,6 +1,7 @@
 import csv
 import sys
 
+
 from util import Node, StackFrontier, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
@@ -62,6 +63,7 @@ def main():
     print("Loading data...")
     load_data(directory)
     print("Data loaded.")
+    
 
     source = person_id_for_name(input("Name: "))
     if source is None:
@@ -94,7 +96,42 @@ def shortest_path(source, target):
     """
 
     # TODO
-    raise NotImplementedError
+    path = ()
+    neighbors = neighbors_for_person(source)
+    relationshipStack = StackFrontier()
+    start = Node(state = source, parent = None, action = None)
+    num_explored = 0
+    
+    relationshipStack.add(start)
+    explored = set()
+    
+    while True:
+        if relationshipStack.empty():
+            return None
+        node = relationshipStack.remove()
+        num_explored += 1
+        if node.state == target:
+            movie = []
+            person = []
+            while node.parent is not None:
+                
+                movie.append(node.action)
+                person.append(node.state)
+                node = node.parent
+            movie.reverse()
+            person.reverse()
+            return list(zip(movie, person))
+        explored.add(node.state)
+
+        for movie, person in neighbors:
+            if not relationshipStack.contains_state(person) and person not in explored:
+                child = Node(state=person, parent = node, action = movie)
+                relationshipStack.add(child)
+        
+        
+        
+    
+    
 
 
 def person_id_for_name(name):
