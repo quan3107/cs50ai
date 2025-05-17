@@ -96,8 +96,8 @@ def shortest_path(source, target):
     """
 
     # TODO
-    path = ()
-    neighbors = neighbors_for_person(source)
+    
+    
     relationshipStack = StackFrontier()
     start = Node(state = source, parent = None, action = None)
     num_explored = 0
@@ -121,12 +121,14 @@ def shortest_path(source, target):
             movie.reverse()
             person.reverse()
             return list(zip(movie, person))
+        
         explored.add(node.state)
 
-        for movie, person in neighbors:
+        for movie, person in neighbors_for_person(node.state):
             if not relationshipStack.contains_state(person) and person not in explored:
                 child = Node(state=person, parent = node, action = movie)
                 relationshipStack.add(child)
+                # print([child.state, child.parent, child.action])
         
         
         
